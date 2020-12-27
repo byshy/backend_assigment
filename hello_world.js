@@ -6,10 +6,23 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/boo', function(req, res) {
+app.get('/', function(req, res) {
   console.log('boo was called');
-  res.send('Hi babe');
+  res.send('<h1> HELLO WORLD </h1>');
+});
+
+app.get('/query', function(req, res) {
+  let queryData = req.query;
+  console.log(queryData);
+  res.send(queryData);
+});
+
+app.get('/greeting/:name', function(req, res) {
+  let name = req.params.name;
+  console.log(name);
+  res.send({message: `hello ${name}`});
 });
 
 app.post('/data', function(req, res) {
@@ -19,7 +32,7 @@ app.post('/data', function(req, res) {
 
   return res.send({
     name: 'basel',
-    status:'babe'
+    message: req.body
   });
 });
 
